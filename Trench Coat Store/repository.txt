@@ -1,0 +1,11 @@
+1,M,navy,12,695,https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRqrEHW8i-5cGtIBS7SxFwVZGMs1WAmpOPgm8yJ0EihqtnugaXgp7E_-pVjpZse3lVovmFo5U61u5Ph&usqp=CAc
+2,M,blue,200,800,https://i1.wp.com/flawlesscrowns.com/wp-content/uploads/2011/09/Burberry-Mens-Bonded-Cotton-Twill-Trench-Coat-2.jpg
+3,S,blue,200,400,https://cdna.lystit.com/photos/2013/06/19/moncler-blue-lorraine-trench-coat-product-3-10973936-623855207.jpeg
+4,S,blue,200,350,https://www.jayley.com/images/metallic-faux-suede-trench-coat-p1999-38801_image.jpg
+5,S,blue,200,300,https://media.missguided.com/i/missguided/O1448915_02?fmt=jpeg&fmt.jpeg.interlaced=true&$product-page__main--2x$
+6,S,blue,200,600,https://images.flannels.com/images/imgzoom/60/60418503_xxl.jpg
+7,S,blue,200,300,https://assets.superbalistcdn.co.za/filters:quality(75):format(jpg)/1861346/original.jpg
+8,M,blue,200,1200,https://cdn.0cm.com/523062-original_default/jazzevar-private-detective-camel-trench-coat-ya7002-1.jpg
+9,M,blue,200,300,https://3.bp.blogspot.com/-zIQdfZ--xeg/TWJV6cEgcgI/AAAAAAAAAYs/k9kDWXukQB8/s1600/n_a+%252828%2529.jpg
+10,M,blue,200,500,https://sassyrascal.co.uk/wp-content/uploads/2022/03/twill-double-breasted-trench-coat-s-1536x1536.jpg
+11,M,navy,12,680,https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRqrEHW8i-5cGtIBS7SxFwVZGMs1WAmpOPgm8yJ0EihqtnugaXgp7E_-pVjpZse3lVovmFo5U61u5Ph&usqp=CAc
