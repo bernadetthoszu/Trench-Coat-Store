@@ -32,6 +32,17 @@ void Repo::remove(const TrenchCoat& elem)
 	this->store();
 }
 
+void Repo::updateAllFields(const int ID, const std::string& new_size, const std::string& new_colour, const int new_price, const int new_quantity, const std::string& new_photograph)
+{
+	TrenchCoat& found = this->getByID(ID); //if no exception was raised, element is in repo
+	found.setSize(new_size);
+	found.setColour(new_colour);
+	found.setPrice(new_price);
+	found.setQuantity(new_quantity);
+	found.setPhotograph(new_photograph);
+	this->store();
+}
+
 void Repo::updateSize(const int ID, const std::string& new_size)
 {
 	TrenchCoat& found = this->getByID(ID); //if no exception was raised, element is in repo

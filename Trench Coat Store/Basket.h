@@ -1,13 +1,20 @@
 #pragma once
 #include "Trench.h"
+//#include "ActionBasket.h"
 #include <vector>
+
 class Basket
 {
+	//friend class BasketListModel;
+
 protected:
 
 	std::vector<TrenchCoat> list;
 	int sum;
-	//int currentCoat;
+
+	/*
+	Remove a coat from the shopping basket. */
+	void removeFromBasket(const TrenchCoat& e);
 
 public:
 	Basket();
@@ -18,7 +25,7 @@ public:
 
 	/*
 	Add a coat to the shopping basket. */
-	void add(const TrenchCoat& e);
+	void addToBasket(const TrenchCoat& e);
 
 	/*
 	Remove everything added to the basket (empty the basket). Sum will be 0. */

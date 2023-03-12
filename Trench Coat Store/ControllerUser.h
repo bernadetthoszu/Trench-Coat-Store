@@ -8,6 +8,7 @@
 
 class ServiceUser
 {
+	friend class BasketWindow;
 private:
 	Repo& repo;
 	Basket* basket;
@@ -31,7 +32,13 @@ public:
 	Retrieve basket. */
 	std::vector<TrenchCoat> seeBasket();
 
+	/*
+	Shows the basket whether in Notepad (CSVBasket) or in Chrome(HTMLBasket)*/
 	void showBasket() { this->basket->showBasket(); }
+
+	/*
+	Retrieve pointer to the current basket object. */
+	Basket* getBasket() { return this->basket; };
 
 	/*
 	Get toatl sum to pay, consisting of elements added to the shopping basket. */
@@ -39,7 +46,7 @@ public:
 
 	/*
 	Get number of coats added to the basket. */
-	int nrCoats() { return this->basket->nrCoats(); }
+	int nrCoatsInBasket() { return this->basket->nrCoats(); }
 
 
 	//SEARCH RESULT FUNCTIONALITIES

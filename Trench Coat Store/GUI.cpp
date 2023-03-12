@@ -13,7 +13,7 @@ GUI::~GUI()
 {
     delete adminMenuWindow;
     delete userMenuWindow;
-    //delete basketWindow;
+    delete basketWindow;
 
     delete adminModeButton;
     delete userModeButton;
@@ -30,17 +30,15 @@ void GUI::initGUI()
     QHBoxLayout* mainL = new QHBoxLayout(this);
     QVBoxLayout* mainLeftL = new QVBoxLayout{};
     QVBoxLayout* mainRightL = new QVBoxLayout{};
-    //mainL->setAlignment(Qt::AlignCenter);
 
 
     QPixmap pix{ "C:/Users/Berni/Documents/GitHub/OOP/a11-12-913-Hoszu-Bernadett/GUITrench/trench_logo1.jpg" };
     QLabel* startPic = new QLabel{};
     startPic->setPixmap(pix.scaled(pix.width() / 3, pix.height() / 3, Qt::KeepAspectRatio));
-    //mainL->setAlignment(welcome, Qt::AlignCenter);
     mainLeftL->addWidget(startPic);
 
     QLabel* welcome = new QLabel{ "Welcome to the Trench Store!" };
-    adminModeButton = new QPushButton{ "Administrator" }; // QMenu inherits QWidget
+    adminModeButton = new QPushButton{ "Administrator" };
     userModeButton = new QPushButton{ "User" };
     mainExitButton = new QPushButton{ "Exit" };
     mainRightL->addWidget(welcome);
@@ -99,6 +97,14 @@ void GUI::initGUI()
     buttons1L->addWidget(adminUpdateButton);
     buttons1L->addWidget(adminRemoveButton);
     adminLeftL->addRow(buttons1L);
+    adminUndoButton = new QPushButton{ "Undo" };
+    adminRedoButton = new QPushButton{ "Redo" };
+    adminUndoShortcut = new QShortcut{ QKeySequence(tr("Ctrl+U")), adminUndoButton };
+    adminRedoShortcut = new QShortcut{ QKeySequence(tr("Ctrl+R")), adminRedoButton };
+    QHBoxLayout* undoRedoButtonsL = new QHBoxLayout{};
+    undoRedoButtonsL->addWidget(adminUndoButton);
+    undoRedoButtonsL->addWidget(adminRedoButton);
+    adminLeftL->addRow(undoRedoButtonsL);
 
     //right side
     QVBoxLayout* adminRightL = new QVBoxLayout{};
@@ -233,34 +239,16 @@ void GUI::initGUI()
 
 
     //Basket Window
-    /*basketWindow = new QWidget{};
-    QVBoxLayout* basketWindowL = new QVBoxLayout{ basketWindow };
-    basketWindow->setWindowTitle("Basket");
-
-    QLabel* basketLabel = new QLabel{ "Your items: " };
-    basketWindowL->addWidget(basketLabel, 3, Qt::AlignTop);
-    userBasketList = new QListWidget{};
-    userBasketList->setSelectionMode(QAbstractItemView::NoSelection);
-    QFont f{ "Courier" , 12 };
-    f.setItalic(true);
-    userBasketList->setFont(f);
-    basketWindowL->addWidget(userBasketList, Qt::AlignTop);
-    QHBoxLayout* basketButtonsL = new QHBoxLayout{};
-    basketBackButton = new QPushButton{"Back"};
-    basketExitButton = new QPushButton{"Exit"};
-    basketButtonsL->addWidget(basketBackButton);
-    basketButtonsL->addWidget(basketExitButton);
-    basketButtonsL->setStretch(1, 3);
-    basketButtonsL->setStretch(0, 3);
-    basketWindowL->addLayout(basketButtonsL, Qt::AlignBottom);
+    basketWindow = new BasketWindow{ userMenuWindow };
+    basketModel = nullptr;
 
     basketWindow->setFixedWidth(800);
-    basketWindow->setFixedHeight(500);*/
+    basketWindow->setFixedHeight(500);
 
 
     //basketWindow->show();
-    userMenuWindow->show();
-    adminMenuWindow->show();
+    /*userMenuWindow->show();
+    adminMenuWindow->show();*/
 
 }
 
@@ -277,6 +265,10 @@ void GUI::connectSignalsAndSlots()
     QObject::connect(adminUpdateButton, &QPushButton::clicked, this, &GUI::adminUpdateButtonClicked);
     QObject::connect(adminRepoList, &QListWidget::itemClicked, this, &GUI::adminRepoListItemSelected);
     QObject::connect(adminRemoveButton, &QPushButton::clicked, this, &GUI::adminRemoveButtonClicked);
+    QObject::connect(adminUndoButton, &QPushButton::clicked, this, &GUI::adminUndoButtonClicked);
+    QObject::connect(adminRedoButton, &QPushButton::clicked, this, &GUI::adminRedoButtonClicked);
+    QObject::connect(adminUndoShortcut, &QShortcut::activated, this, &GUI::adminUndoButtonClicked); //Creating keyboard shortcut for undo/redo functionalities
+    QObject::connect(adminRedoShortcut, &QShortcut::activated, this, &GUI::adminRedoButtonClicked);
     QObject::connect(adminBackButton, &QPushButton::clicked, this, &GUI::backButtonClicked);
     QObject::connect(adminExitButton, &QPushButton::clicked, this, &GUI::exitApp);
 
@@ -312,6 +304,13 @@ void GUI::populateRepoList(std::vector<TrenchCoat> v)
         adminRepoList->setCurrentRow(0);
 }
 
+void GUI::showWindows()
+{
+    basketWindow->show();
+    userMenuWindow->show();
+    adminMenuWindow->show();
+}
+
 void GUI::filterEditedHandler()
 {
     std::string newText = adminFilterEdit->text().toStdString();
@@ -329,10 +328,7 @@ void GUI::adminModeButtonClicked()
 {
     //void QWidget::setWindowState(Qt::WindowStates windowState)
     //windowState ->  Qt::WindowMinimized, Qt::WindowMaximized, Qt::WindowFullScreen, and Qt::WindowActive
-    userNextButton->setDisabled(true);
-    userBuyButton->setDisabled(true);
-    userSearchButton->setDisabled(true);
-    userSeeBasketButton->setDisabled(true);
+
     adminMenuWindow->activateWindow();
 }
 
@@ -349,6 +345,13 @@ void GUI::userModeButtonClicked()
     userSeeQuantityEdit->clear();
     userSeePhotographEdit->clear();
 
+    userNextButton->setDisabled(true);
+    userBuyButton->setDisabled(true);
+    userSearchButton->setDisabled(true);
+    userSeeBasketButton->setDisabled(true);
+    userNextButton->setDisabled(true);
+    userBuyButton->setDisabled(true);
+
     userMenuWindow->activateWindow();
 }
 
@@ -360,22 +363,24 @@ void GUI::adminAddButtonClicked()
     int price = adminPriceEdit->text().toInt();
     int quantity = adminQuantityEdit->text().toInt();
     std::string photograph = adminPhotographEdit->text().toStdString();
+    std::string msg = "";
     try {
         admin.add(ID, size, colour, price, quantity, photograph);
     }
     catch (ValidationError& ve)
     {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Validation error");
-        msgBox.setText(ve.what());
-        msgBox.exec();
-        return;
+        msg += ve.what();
     }
     catch (RepoError& re)
     {
+        msg += re.what();
+    }
+
+    if (msg.size() > 0)
+    {
         QMessageBox msgBox;
-        msgBox.setWindowTitle("Repository error");
-        msgBox.setText(re.what());
+        msgBox.setWindowTitle("Error");
+        msgBox.setText(msg.c_str());
         msgBox.exec();
         return;
     }
@@ -451,27 +456,26 @@ void GUI::adminUpdateButtonClicked()
     int quantity = adminQuantityEdit->text().toInt();
     std::string photograph = adminPhotographEdit->text().toStdString();
 
+    std::string msg = "";
+
     try
     {
-        admin.updateSize(ID, size);
-        admin.updateColour(ID, colour);
-        admin.updatePrice(ID, price);
-        admin.updateQuantity(ID, quantity);
-        admin.updatePhotograph(ID, photograph);
+        admin.updateAllFields(ID, size, colour, price, quantity, photograph);
     }
     catch (ValidationError& ve)
     {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Validation error");
-        msgBox.setText(ve.what());
-        msgBox.exec();
-        return;
+        msg += ve.what();
     }
     catch (RepoError& re)
     {
+        msg += re.what();
+    }
+
+    if (msg.size() > 0)
+    {
         QMessageBox msgBox;
-        msgBox.setWindowTitle("Repository error");
-        msgBox.setText(re.what());
+        msgBox.setWindowTitle("Error");
+        msgBox.setText(msg.c_str());
         msgBox.exec();
         return;
     }
@@ -500,23 +504,25 @@ void GUI::adminRemoveButtonClicked()
 
     QListWidgetItem* elem = adminRepoList->currentItem();
     int ID = adminRepoList->row(elem) + 1;
+    std::string msg = "";
 
     try {
         admin.remove(ID);
     }
     catch (ValidationError& ve)
     {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Validation error");
-        msgBox.setText(ve.what());
-        msgBox.exec();
-        return;
+        msg += ve.what();
     }
     catch (RepoError& re)
     {
+        msg += re.what();
+    }
+
+    if (msg.size() > 0)
+    {
         QMessageBox msgBox;
-        msgBox.setWindowTitle("Repository error");
-        msgBox.setText(re.what());
+        msgBox.setWindowTitle("Error");
+        msgBox.setText(msg.c_str());
         msgBox.exec();
         return;
     }
@@ -530,14 +536,69 @@ void GUI::adminRemoveButtonClicked()
     adminPhotographEdit->clear();
 }
 
+void GUI::adminUndoButtonClicked()
+{
+    try {
+        admin.undo();
+    }
+    catch (UndoRedoError& ure)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Error");
+        msgBox.setText(ure.what());
+        msgBox.exec();
+    }
+
+    std::vector<TrenchCoat> repo = admin.getAllCoats();
+    populateRepoList(repo);
+    if (repo.size() > 0)
+        adminRepoList->setCurrentRow(adminRepoList->count() - 1);
+}
+
+void GUI::adminRedoButtonClicked()
+{
+    try {
+        admin.redo();
+    }
+    catch (UndoRedoError& ure)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Error");
+        msgBox.setText(ure.what());
+        msgBox.exec();
+    }
+
+    std::vector<TrenchCoat> repo = admin.getAllCoats();
+    populateRepoList(repo);
+    if (repo.size() > 0)
+        adminRepoList->setCurrentRow(adminRepoList->count() - 1);
+}
+
 void GUI::userStoreOptionEditingFinished()
 {
-    user.newBasket(userStoreOptionEdit->text().toStdString());
+    try {
+        user.newBasket(userStoreOptionEdit->text().toStdString());
+    }
+    catch (ValidationError& ve)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Error");
+        msgBox.setText(ve.what());
+        msgBox.exec();
+        return;
+    }
+
+    if (basketModel != nullptr)
+        delete basketModel;
+    basketModel = new BasketListModel{ user.getBasket() };
+    basketWindow->setModel(basketModel);
+
     userSearchButton->setEnabled(true);
 }
 
 void GUI::userSearchButtonClicked()
 {
+    std::string msg = "";
     try {
         user.search(userSizeEdit->text().toStdString());
     }
@@ -558,6 +619,8 @@ void GUI::userSearchButtonClicked()
         msgBox.exec();
         return;
     }
+
+
 
     if (!sortAscendingPriceRButton->isChecked() && !sortDescendingSizeRButton->isChecked() && !noSortRButton->isChecked())
     {
@@ -607,8 +670,11 @@ void GUI::userNextButtonClicked()
 
 void GUI::userBuyButtonClicked()
 {
-    user.addToBasket(user.getCurrent());
+    //user.addToBasket(user.getCurrent());
+    basketModel->addElement(user.getCurrent());
+    basketWindow->setSum(user.getSum());
     QString sum_qstr = QString::number(user.getSum());
+    //emit basketModel->dataChanged();
 
     QMessageBox msgBox;
     msgBox.setWindowTitle("Basket");
@@ -618,7 +684,11 @@ void GUI::userBuyButtonClicked()
 
 void GUI::userBasketButtonClicked()
 {
-    user.showBasket();
+    //if you want to open in notepad/browser
+    //user.showBasket();
+
+    //if you want a new window
+    basketWindow->activateWindow();
 }
 
 //void GUI::populateBasketList(std::vector<TrenchCoat> v)

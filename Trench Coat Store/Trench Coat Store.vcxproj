@@ -83,7 +83,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActionBasket.cpp" />
+    <ClCompile Include="ActionRepo.cpp" />
     <ClCompile Include="Basket.cpp" />
+    <ClCompile Include="BasketListModel.cpp" />
+    <ClCompile Include="BasketWindow.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
     <ClCompile Include="Comparator.cpp" />
     <ClCompile Include="ControllerAdmin.cpp" />
     <ClCompile Include="ControllerUser.cpp" />
@@ -95,6 +104,7 @@
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Validation.cpp" />
     <QtRcc Include="TrenchCoatStore.qrc" />
+    <QtUic Include="BasketWindow.ui" />
     <QtUic Include="TrenchCoatStore.ui" />
     <QtMoc Include="TrenchCoatStore.h" />
     <ClCompile Include="Exceptions.cpp" />
@@ -103,7 +113,11 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActionBasket.h" />
+    <ClInclude Include="ActionRepo.h" />
     <ClInclude Include="Basket.h" />
+    <ClInclude Include="BasketListModel.h" />
+    <QtMoc Include="BasketWindow.h" />
     <ClInclude Include="Comparator.h" />
     <ClInclude Include="ControllerAdmin.h" />
     <ClInclude Include="ControllerUser.h" />

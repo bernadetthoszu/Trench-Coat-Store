@@ -32,6 +32,11 @@ public:
 	void remove(const TrenchCoat& elem);
 
 	/*
+	Update all fields of an element with the given new values.
+	Throws RepoError if element is not in the repo. */
+	void updateAllFields(const int ID, const std::string& new_size, const std::string& new_colour, const int new_price, const int new_quantity, const std::string& new_photograph);
+
+	/*
 	Update an element's size field.
 	Throws RepoError if element is not in the repo. */
 	void updateSize(const int ID, const std::string& new_size);

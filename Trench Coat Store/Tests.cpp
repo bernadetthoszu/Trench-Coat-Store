@@ -242,8 +242,8 @@ void Tests::testBasket()
 	TrenchCoat t3{ 3, "S", "marine", 1000, 100, "asdf2" };
 
 	assert(b.getSum() == 0);
-	b.add(t1);
-	b.add(t2);
+	b.addToBasket(t1);
+	b.addToBasket(t2);
 	assert(b.getSum() == 320);
 	assert(b[1].getID() == 2);
 	b.emptyBasket();

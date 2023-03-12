@@ -2,6 +2,8 @@
 #include <QtWidgets/QApplication>
 #include <vector>
 #include <qwidget.h>
+#include "BasketListModel.h"
+#include "BasketWindow.h"
 #include "ControllerAdmin.h"
 #include "ControllerUser.h"
 #include "Utils.h"
@@ -18,6 +20,7 @@
 #include <QFormLayout>
 #include <QButtonGroup>
 #include <QMessageBox>
+#include <QShortcut>
 
 class GUI : public QWidget
 {
@@ -27,6 +30,8 @@ public:
     GUI(ServiceAdmin& _admin, ServiceUser& _user, QApplication& _app, QWidget* parent = 0);
     ~GUI();
 
+    void showWindows();
+
 private:
     ServiceAdmin& admin;
     ServiceUser& user;
@@ -35,7 +40,8 @@ private:
     //Windows
     QWidget* adminMenuWindow;
     QWidget* userMenuWindow;
-    //QWidget* basketWindow;
+    BasketWindow* basketWindow;  //QAbstractItemView inherits from QWidget
+    BasketListModel* basketModel;
 
     //Main Window : 'this'
     QPushButton* adminModeButton;
@@ -55,6 +61,10 @@ private:
     QListWidget* adminRepoList;
     QPushButton* adminBackButton;
     QPushButton* adminExitButton;
+    QPushButton* adminUndoButton;
+    QPushButton* adminRedoButton;
+    QShortcut* adminUndoShortcut;
+    QShortcut* adminRedoShortcut;
 
     //User
     QLineEdit* userStoreOptionEdit;
@@ -92,6 +102,8 @@ private:
     void adminRepoListItemSelected();
     void adminUpdateButtonClicked();
     void adminRemoveButtonClicked();
+    void adminUndoButtonClicked();
+    void adminRedoButtonClicked();
 
     void userStoreOptionEditingFinished();
     void userSearchButtonClicked();

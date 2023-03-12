@@ -79,6 +79,18 @@
     <ClCompile Include="GUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ActionBasket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionRepo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BasketListModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BasketWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Trench.h">
@@ -117,9 +129,21 @@
     <ClInclude Include="ControllerUser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ActionBasket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionRepo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasketListModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GUI.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="BasketWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -130,5 +154,10 @@
   <ItemGroup>
     <None Include="repository.csv" />
     <None Include="repository.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="BasketWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
 </Project>

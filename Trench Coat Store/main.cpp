@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
     ServiceUser srv_u{ repo };
 
     GUI gui{ srv_a, srv_u, a };
+    gui.showWindows();
     gui.show();
     return a.exec();
 }

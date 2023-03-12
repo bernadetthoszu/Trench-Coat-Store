@@ -47,3 +47,12 @@ public:
 	ValueError(std::string _message) : message{ _message } {}
 	const char* what() const noexcept override { return message.c_str(); }
 };
+
+class UndoRedoError : public std::exception
+{
+private:
+	std::string message;
+public:
+	UndoRedoError(std::string _message) : message{ _message } {}
+	const char* what() const noexcept override { return message.c_str(); }
+};

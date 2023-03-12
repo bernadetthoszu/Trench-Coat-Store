@@ -1,4 +1,5 @@
 #include "ControllerUser.h"
+#include "ControllerUser.h"
 #include <iostream>
 
 
@@ -29,7 +30,7 @@ void ServiceUser::newBasket(const std::string& _basket_type)
 
 void ServiceUser::addToBasket(const TrenchCoat& coat)
 {
-	this->basket->add(coat);
+	this->basket->addToBasket(coat);
 	this->basket->storeBasket();
 }
 
