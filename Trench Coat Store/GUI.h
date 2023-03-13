@@ -4,8 +4,8 @@
 #include <qwidget.h>
 #include "BasketListModel.h"
 #include "BasketWindow.h"
-#include "ControllerAdmin.h"
-#include "ControllerUser.h"
+#include "ServiceAdmin.h"
+#include "ServiceUser.h"
 #include "Utils.h"
 #include <QLineEdit>
 #include <QPushButton>
@@ -49,6 +49,7 @@ private:
     QPushButton* mainExitButton;
 
     //Admin
+    QLineEdit* adminIDEdit;
     QLineEdit* adminSizeEdit;
     QLineEdit* adminColourEdit;
     QLineEdit* adminPriceEdit;
@@ -84,15 +85,10 @@ private:
     QPushButton* userBackButton;
     QPushButton* userExitButton;
 
-    //basket
-   /* QListWidget* userBasketList;
-    QPushButton* basketBackButton;
-    QPushButton* basketExitButton;*/
 
     void initGUI();
     void connectSignalsAndSlots();
     void populateRepoList(std::vector<TrenchCoat> v);
-    //void populateBasketList(std::vector<TrenchCoat> v);
 
     void filterEditedHandler();
     void adminModeButtonClicked();

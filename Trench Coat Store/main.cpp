@@ -3,8 +3,8 @@
 
 #include "GUI.h"
 #include "Repository.h"
-#include "ControllerAdmin.h"
-#include "ControllerUser.h"
+#include "ServiceAdmin.h"
+#include "ServiceUser.h"
 #include "Tests.h"
 #include <iostream>
 #include <fstream>

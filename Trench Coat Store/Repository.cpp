@@ -9,7 +9,6 @@ void Repo::clearRepo()
 void Repo::add(const TrenchCoat& elem)
 {
 	std::string msg = "Trench already recorded!\n";
-	int i = 0;
 	if (this->inRepo(elem))
 		throw RepoError(msg);
 	this->stock.push_back(elem); //COPY is put into repo, not actual element

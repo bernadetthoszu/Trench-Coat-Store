@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "Trench.h"
+#include "TrenchCoat.h"
 #include "Repository.h"
-#include "ControllerAdmin.h"
-#include "ControllerUser.h"
+#include "ServiceAdmin.h"
+#include "ServiceUser.h"
 #include "Comparator.h"
 
 class Tests

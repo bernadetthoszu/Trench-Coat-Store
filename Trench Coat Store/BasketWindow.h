@@ -15,8 +15,6 @@ public:
 	~BasketWindow();
 
 	void setModel(QAbstractListModel* model);
-	//void setModel(BasketListModel* model);
-	//void resetModel(BasketListModel* model);
 
 	void setSum(int sum);
 
@@ -25,10 +23,5 @@ private:
 	Ui::BasketWindow ui;
 	BasketListModel* model;
 
-	QShortcut* undoShortcut;
-	QShortcut* redoShortcut;
-
 	void backButtonClicked();
-	//void undoButtonClicked();
-	//void redoButtonClicked();
 };

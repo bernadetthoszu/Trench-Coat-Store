@@ -1,4 +1,4 @@
-#include "Trench.h"
+#include "TrenchCoat.h"
 #include <string>
 #include <format>
 
@@ -95,22 +95,3 @@ std::ostream& operator<<(std::ostream& os, const TrenchCoat& t)
     os << t.ID << "," << t.size << "," << t.colour << "," << t.quantity << "," << t.price << "," << t.photograph << "\n";
     return os;
 }
-
-/*
-(*)
-// Online C++ compiler to run C++ program online
-#include <iostream>
-#include <string>
-
-int main() {
-    std::string s1{"Berni\0"}, s2;
-    s2 = s1;
-    s2.replace(0, 1, "b");
-    std::cout<<s1;
-    std::cout<<s2;
-    return 0;
-}
-
-=> Berniberni
-
-*/

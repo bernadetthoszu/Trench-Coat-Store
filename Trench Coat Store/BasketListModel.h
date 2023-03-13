@@ -1,21 +1,14 @@
 #pragma once
 #include <qabstractitemmodel.h>
-//#include "ActionBasket.h"
 #include "Basket.h"
 #include <memory>
 
 class BasketListModel : public QAbstractListModel
 {
-	/*friend class ActionBasketAdd;
-	friend class ActionBasketRemove;*/
+
 private:
 
 	Basket* basket;
-
-	/*std::vector<std::unique_ptr<ActionBasket>> undoStack;
-	std::vector<std::unique_ptr<ActionBasket>> redoStack;*/
-
-	/*void removeElement(const TrenchCoat& coat);*/
 
 public:
 	BasketListModel(Basket* _basket, QObject* parent = NULL);
@@ -36,8 +29,5 @@ public:
 
 	int getBasketSum() { return basket->getSum(); }
 
-	//void undoAddToBasket();
-
-	/*void redoAddToBasket();*/
 };
 

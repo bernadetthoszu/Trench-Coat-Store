@@ -19,25 +19,25 @@ GUI::~GUI()
     delete userModeButton;
     delete mainExitButton;
 
-    //the rest is destroyed by de destructos of these objects
+    //the rest is destroyed by the destructors of these objects
 }
 
 void GUI::initGUI()
 {
     //START WINDOW
-    this->setWindowTitle("Trench Store");
+    this->setWindowTitle("Trench Coat Store");
 
     QHBoxLayout* mainL = new QHBoxLayout(this);
     QVBoxLayout* mainLeftL = new QVBoxLayout{};
     QVBoxLayout* mainRightL = new QVBoxLayout{};
 
 
-    QPixmap pix{ "C:/Users/Berni/Documents/GitHub/OOP/a11-12-913-Hoszu-Bernadett/GUITrench/trench_logo1.jpg" };
+    QPixmap pix{ "C:/Users/Berni/Documents/My_Projects/Trench Coat Store/trench_logo1.jpg" };
     QLabel* startPic = new QLabel{};
     startPic->setPixmap(pix.scaled(pix.width() / 3, pix.height() / 3, Qt::KeepAspectRatio));
     mainLeftL->addWidget(startPic);
 
-    QLabel* welcome = new QLabel{ "Welcome to the Trench Store!" };
+    QLabel* welcome = new QLabel{ "Welcome to the Trench Coat Store!" };
     adminModeButton = new QPushButton{ "Administrator" };
     userModeButton = new QPushButton{ "User" };
     mainExitButton = new QPushButton{ "Exit" };
@@ -66,22 +66,33 @@ void GUI::initGUI()
     //left side
     QFormLayout* adminLeftL = new QFormLayout{};
     QLabel* emptyLabel = new QLabel{ " " };
+    QLabel* IDLabel = new QLabel{ "ID: " };
     QLabel* sizeLabel = new QLabel{ "Size: " };
     QLabel* colourLabel = new QLabel{ "Colour: " };
     QLabel* priceLabel = new QLabel{ "Price: " };
     QLabel* quantityLabel = new QLabel{ "Quantity: " };
     QLabel* photoLabel = new QLabel{ "Picture link: " };
+    adminIDEdit = new QLineEdit{};
+    adminIDEdit->setDisabled(true);
+    adminIDEdit->setFixedWidth(300);
     adminSizeEdit = new QLineEdit{};
+    adminSizeEdit->setFixedWidth(300);
     adminColourEdit = new QLineEdit{};
+    adminColourEdit->setFixedWidth(300);
     adminPriceEdit = new QLineEdit{};
+    adminPriceEdit->setFixedWidth(300);
     adminQuantityEdit = new QLineEdit{};
-    adminPhotographEdit = new QLineEdit{};
+    adminQuantityEdit->setFixedWidth(300);
+    adminPhotographEdit = new QLineEdit{}; 
+    adminPhotographEdit->setFixedWidth(300);
+    IDLabel->setBuddy(adminIDEdit);
     sizeLabel->setBuddy(adminSizeEdit);
     colourLabel->setBuddy(adminColourEdit);
     priceLabel->setBuddy(adminPriceEdit);
     quantityLabel->setBuddy(adminQuantityEdit);
     photoLabel->setBuddy(adminPhotographEdit);
     adminLeftL->addRow(emptyLabel);
+    adminLeftL->addRow(IDLabel, adminIDEdit);  
     adminLeftL->addRow(sizeLabel, adminSizeEdit);
     adminLeftL->addRow(colourLabel, adminColourEdit);
     adminLeftL->addRow(priceLabel, adminPriceEdit);
@@ -111,11 +122,12 @@ void GUI::initGUI()
     QHBoxLayout* filterL = new QHBoxLayout{};
     QLabel* filterLabel = new QLabel{ "Filter: " };
     adminFilterEdit = new QLineEdit{};
+    adminFilterEdit->setFixedWidth(320);
     filterLabel->setBuddy(adminFilterEdit);
     filterL->addWidget(filterLabel);
     filterL->addWidget(adminFilterEdit);
     adminRightL->addLayout(filterL, Qt::AlignTop);
-    QLabel* repoLabel = new QLabel{ "All coats" };
+    QLabel* repoLabel = new QLabel{ "All items" };
     adminRepoList = new QListWidget{};
     adminRepoList->setSelectionMode(QAbstractItemView::SingleSelection);
     //...
@@ -246,10 +258,6 @@ void GUI::initGUI()
     basketWindow->setFixedHeight(500);
 
 
-    //basketWindow->show();
-    /*userMenuWindow->show();
-    adminMenuWindow->show();*/
-
 }
 
 void GUI::connectSignalsAndSlots()
@@ -280,8 +288,6 @@ void GUI::connectSignalsAndSlots()
     QObject::connect(userBackButton, &QPushButton::clicked, this, &GUI::backButtonClicked);
     QObject::connect(userExitButton, &QPushButton::clicked, this, &GUI::exitApp);
 
-    //QObject::connect(basketBackButton, &QPushButton::clicked, this, &GUI::backButtonClicked);
-    //QObject::connect(basketExitButton, &QPushButton::clicked, this, &GUI::exitApp);
 }
 
 void GUI::populateRepoList(std::vector<TrenchCoat> v)
@@ -393,6 +399,7 @@ void GUI::adminAddButtonClicked()
     item->setFont(f);
     adminRepoList->addItem(item);
 
+    adminIDEdit->clear(); 
     adminSizeEdit->clear();
     adminColourEdit->clear();
     adminPriceEdit->clear();
@@ -433,6 +440,7 @@ void GUI::adminRepoListItemSelected()
     getline(tokenize, photograph, ',');
     photograph = trim(photograph);
 
+    adminIDEdit->setText(QString::fromStdString(ID)); 
     adminSizeEdit->setText(QString::fromStdString(size));
     adminColourEdit->setText(QString::fromStdString(colour));
     adminPriceEdit->setText(QString::fromStdString(price));
@@ -447,9 +455,7 @@ void GUI::adminUpdateButtonClicked()
     if (index_list.size() == 0)
         return;
 
-    QListWidgetItem* elem = adminRepoList->currentItem();
-    int ID = adminRepoList->row(elem) + 1;
-
+    int ID = adminIDEdit->text().toInt();
     std::string size = adminSizeEdit->text().toStdString();
     std::string colour = adminColourEdit->text().toStdString();
     int price = adminPriceEdit->text().toInt();
@@ -479,21 +485,9 @@ void GUI::adminUpdateButtonClicked()
         msgBox.exec();
         return;
     }
-
-    adminRepoList->takeItem(ID - 1); //Removes and returns the item from the given row in the list widget; otherwise returns nullptr.
-    //ID -1 because  ID >= 1 while list indexing starts at 0
+    
     QString itemInList = QString::fromStdString(admin.getByID(ID).toSring());
-    QFont f{ "Courier" , 12 };
-    f.setItalic(true);
-    QListWidgetItem* item = new QListWidgetItem{ itemInList };
-    item->setFont(f);
-    adminRepoList->insertItem(ID - 1, item);
-
-    adminSizeEdit->clear();
-    adminColourEdit->clear();
-    adminPriceEdit->clear();
-    adminQuantityEdit->clear();
-    adminPhotographEdit->clear();
+    adminRepoList->currentItem()->setText(itemInList);
 }
 
 void GUI::adminRemoveButtonClicked()
@@ -502,8 +496,7 @@ void GUI::adminRemoveButtonClicked()
     if (index_list.size() == 0)
         return;
 
-    QListWidgetItem* elem = adminRepoList->currentItem();
-    int ID = adminRepoList->row(elem) + 1;
+    int ID = adminIDEdit->text().toInt(); 
     std::string msg = "";
 
     try {
@@ -527,8 +520,9 @@ void GUI::adminRemoveButtonClicked()
         return;
     }
 
-    adminRepoList->takeItem(ID - 1);
+    adminRepoList->takeItem(adminRepoList->currentRow());
 
+    adminIDEdit->clear();
     adminSizeEdit->clear();
     adminColourEdit->clear();
     adminPriceEdit->clear();
@@ -550,9 +544,10 @@ void GUI::adminUndoButtonClicked()
     }
 
     std::vector<TrenchCoat> repo = admin.getAllCoats();
+    int selectedIndex = adminRepoList->currentRow();
     populateRepoList(repo);
     if (repo.size() > 0)
-        adminRepoList->setCurrentRow(adminRepoList->count() - 1);
+        adminRepoList->setCurrentRow(selectedIndex);
 }
 
 void GUI::adminRedoButtonClicked()
@@ -569,9 +564,10 @@ void GUI::adminRedoButtonClicked()
     }
 
     std::vector<TrenchCoat> repo = admin.getAllCoats();
+    int selectedIndex = adminRepoList->currentRow();
     populateRepoList(repo);
     if (repo.size() > 0)
-        adminRepoList->setCurrentRow(adminRepoList->count() - 1);
+        adminRepoList->setCurrentRow(selectedIndex);
 }
 
 void GUI::userStoreOptionEditingFinished()
@@ -670,7 +666,6 @@ void GUI::userNextButtonClicked()
 
 void GUI::userBuyButtonClicked()
 {
-    //user.addToBasket(user.getCurrent());
     basketModel->addElement(user.getCurrent());
     basketWindow->setSum(user.getSum());
     QString sum_qstr = QString::number(user.getSum());
@@ -690,24 +685,6 @@ void GUI::userBasketButtonClicked()
     //if you want a new window
     basketWindow->activateWindow();
 }
-
-//void GUI::populateBasketList(std::vector<TrenchCoat> v)
-//{
-//
-//    if (userBasketList->count() > 0)
-//        adminRepoList->clear();
-//
-//    for (auto t : v)
-//    {
-//        QString itemInList = QString::fromStdString(t.toSring());
-//        QFont f{ "Courier" , 12 };
-//        f.setItalic(true);
-//        QListWidgetItem* item = new QListWidgetItem{ itemInList };
-//        item->setFont(f);
-//        userBasketList->addItem(item);
-//    }
-//
-//}
 
 void GUI::backButtonClicked()
 {

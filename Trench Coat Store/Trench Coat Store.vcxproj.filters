@@ -40,7 +40,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Trench.cpp">
+    <ClCompile Include="TrenchCoat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Exceptions.cpp">
@@ -70,16 +70,13 @@
     <ClCompile Include="Tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ControllerAdmin.cpp">
+    <ClCompile Include="ServiceAdmin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ControllerUser.cpp">
+    <ClCompile Include="ServiceUser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ActionBasket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ActionRepo.cpp">
@@ -93,7 +90,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Trench.h">
+    <ClInclude Include="TrenchCoat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Exceptions.h">
@@ -123,13 +120,10 @@
     <ClInclude Include="Tests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ControllerAdmin.h">
+    <ClInclude Include="ServiceAdmin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ControllerUser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ActionBasket.h">
+    <ClInclude Include="ServiceUser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ActionRepo.h">

@@ -1,11 +1,9 @@
 #pragma once
-#include "Trench.h"
-//#include "ActionBasket.h"
+#include "TrenchCoat.h"
 #include <vector>
 
 class Basket
 {
-	//friend class BasketListModel;
 
 protected:
 

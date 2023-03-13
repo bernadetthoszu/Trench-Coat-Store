@@ -83,7 +83,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ActionBasket.cpp" />
     <ClCompile Include="ActionRepo.cpp" />
     <ClCompile Include="Basket.cpp" />
     <ClCompile Include="BasketListModel.cpp" />
@@ -94,8 +93,8 @@
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
     <ClCompile Include="Comparator.cpp" />
-    <ClCompile Include="ControllerAdmin.cpp" />
-    <ClCompile Include="ControllerUser.cpp" />
+    <ClCompile Include="ServiceAdmin.cpp" />
+    <ClCompile Include="ServiceUser.cpp" />
     <ClCompile Include="CSVBasket.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="HTMLBasket.cpp" />
@@ -108,26 +107,25 @@
     <QtUic Include="TrenchCoatStore.ui" />
     <QtMoc Include="TrenchCoatStore.h" />
     <ClCompile Include="Exceptions.cpp" />
-    <ClCompile Include="Trench.cpp" />
+    <ClCompile Include="TrenchCoat.cpp" />
     <ClCompile Include="TrenchCoatStore.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActionBasket.h" />
     <ClInclude Include="ActionRepo.h" />
     <ClInclude Include="Basket.h" />
     <ClInclude Include="BasketListModel.h" />
     <QtMoc Include="BasketWindow.h" />
     <ClInclude Include="Comparator.h" />
-    <ClInclude Include="ControllerAdmin.h" />
-    <ClInclude Include="ControllerUser.h" />
+    <ClInclude Include="ServiceAdmin.h" />
+    <ClInclude Include="ServiceUser.h" />
     <ClInclude Include="CSVBasket.h" />
     <ClInclude Include="Exceptions.h" />
     <QtMoc Include="GUI.h" />
     <ClInclude Include="HTMLBasket.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="Tests.h" />
-    <ClInclude Include="Trench.h" />
+    <ClInclude Include="TrenchCoat.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Validation.h" />
   </ItemGroup>

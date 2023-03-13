@@ -18,13 +18,6 @@ BasketWindow::BasketWindow(QWidget* _user, QWidget* parent) : QWidget(parent), u
 
 	QObject::connect(ui.basketBackButton, &QPushButton::clicked, this, &BasketWindow::backButtonClicked);
 
-	undoShortcut = new QShortcut{ QKeySequence(tr("Ctrl+U")), ui.undoButton };
-	redoShortcut = new QShortcut{ QKeySequence(tr("Ctrl+R")), ui.redoButton };
-	//QObject::connect(ui.undoButton, &QPushButton::clicked, this, &BasketWindow::undoButtonClicked);
-	//QObject::connect(ui.redoButton, &QPushButton::clicked, this, &BasketWindow::redoButtonClicked);
-	//QObject::connect(undoShortcut, &QShortcut::activated, this, &BasketWindow::undoButtonClicked);
-	//QObject::connect(redoShortcut, &QShortcut::activated, this, &BasketWindow::redoButtonClicked);
-
 }
 
 BasketWindow::~BasketWindow()
@@ -46,31 +39,3 @@ void BasketWindow::backButtonClicked()
 {
 	user->activateWindow();
 }
-
-//void BasketWindow::undoButtonClicked()
-//{
-//	try {
-//		model->undoAddToBasket();
-//	}
-//	catch (UndoRedoError& ure)
-//	{
-//		QMessageBox msgBox;
-//		msgBox.setWindowTitle("Error");
-//		msgBox.setText(ure.what());
-//		msgBox.exec();
-//	}
-//}
-
-//void BasketWindow::redoButtonClicked()
-//{
-//	try {
-//		model->redoAddToBasket();
-//	}
-//	catch (UndoRedoError& ure)
-//	{
-//		QMessageBox msgBox;
-//		msgBox.setWindowTitle("Error");
-//		msgBox.setText(ure.what());
-//		msgBox.exec();
-//	}
-//}
