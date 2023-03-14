@@ -1,6 +1,6 @@
 # Trench Coat Store
 
-This is an assignment project done in **C++** for the OOP course in my 2nd year of CS Bachelor.
+This is an assignment project done in **C++** for the OOP course during my 1st year of CS Bachelor.
 
 My task was to implemented a trench coat store which is developed according to the **OOP paradigm**, using **layered architecture**. It can be used in two modes: *admin* and *user*.
 - Admins can: perform CRUD operations on the coats repository and in case they change their mind, they can revert and redo any of their action. They can also perform filtering on the storeroom items.
