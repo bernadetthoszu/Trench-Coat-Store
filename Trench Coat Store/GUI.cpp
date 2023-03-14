@@ -166,7 +166,6 @@ void GUI::initGUI()
 
     //left side
     QVBoxLayout* userLeftL = new QVBoxLayout{};
-    userLeftL->addStretch(2);
     QHBoxLayout* storeL = new QHBoxLayout{};
     QLabel* storingOption = new QLabel{ "Save basket as: " };
     userStoreOptionEdit = new QLineEdit{};
@@ -197,19 +196,10 @@ void GUI::initGUI()
     searchL->addWidget(userSizeEdit, Qt::AlignTop);
     searchL->addWidget(userSearchButton, Qt::AlignTop);
     userLeftL->addLayout(searchL, Qt::AlignTop);
-    userLeftL->addStretch(200);
-    QHBoxLayout* backExitL = new QHBoxLayout{};
-    userBackButton = new QPushButton{ "Back" };
-    userExitButton = new QPushButton{ "Exit" };
-    backExitL->addWidget(userBackButton);
-    backExitL->addWidget(userExitButton);
-    userLeftL->addLayout(backExitL, Qt::AlignBottom);
-
-    //right side
-    QVBoxLayout* userRightL = new QVBoxLayout{};
+    userLeftL->addStretch(20);
     QLabel* coatLabel = new QLabel{ "Coat: " };
-    userRightL->addStretch(1);
-    userRightL->addWidget(coatLabel, 2, Qt::AlignTop);
+    userLeftL->addStretch(1);
+    userLeftL->addWidget(coatLabel, 2, Qt::AlignTop);
     QFormLayout* showCoatL = new QFormLayout{};
     userSeeSizeEdit = new QLineEdit{};
     userSeeColourEdit = new QLineEdit{};
@@ -237,9 +227,23 @@ void GUI::initGUI()
     nextBuyL->addWidget(userNextButton);
     nextBuyL->addWidget(userBuyButton);
     showCoatL->addRow(nextBuyL);
-    userRightL->addLayout(showCoatL, Qt::AlignTop);
+    userLeftL->addLayout(showCoatL, Qt::AlignTop);
     userSeeBasketButton = new QPushButton{ "Basket" };
-    userRightL->addWidget(userSeeBasketButton, Qt::AlignBottom);
+    userLeftL->addWidget(userSeeBasketButton, Qt::AlignBottom);
+    userLeftL->addStretch(20);
+    QHBoxLayout* backExitL = new QHBoxLayout{};
+    userBackButton = new QPushButton{ "Back" };
+    userExitButton = new QPushButton{ "Exit" };
+    backExitL->addWidget(userBackButton);
+    backExitL->addWidget(userExitButton);
+    userLeftL->addLayout(backExitL, Qt::AlignBottom);
+  
+    //right side
+    QVBoxLayout* userRightL = new QVBoxLayout{};
+    QPixmap pix2{ "C:/Users/Berni/Documents/My_Projects/Trench Coat Store/trench_coat_2.jpg" };
+    QLabel* userPic = new QLabel{};
+    userPic->setPixmap(pix2.scaled(pix2.width(), pix2.height(), Qt::KeepAspectRatio));
+    userRightL->addWidget(userPic);
 
     //embed in main layout
     userWindowL->addLayout(userLeftL);
@@ -446,6 +450,7 @@ void GUI::adminRepoListItemSelected()
     adminPriceEdit->setText(QString::fromStdString(price));
     adminQuantityEdit->setText(QString::fromStdString(quantity));
     adminPhotographEdit->setText(QString::fromStdString(photograph));
+    //adminPhotographEdit->cursorForward()
 }
 
 void GUI::adminUpdateButtonClicked()
